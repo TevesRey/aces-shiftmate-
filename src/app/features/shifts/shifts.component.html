@@ -1,0 +1,79 @@
+<app-page-header
+  title="Shift Management"
+  description="Create, organize, and monitor employee shifts.">
+  <div actions>
+    <app-button variant="primary" size="sm" (click)="openAddModal()">
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        Create Shift
+      </span>
+    </app-button>
+  </div>
+</app-page-header>
+
+<app-shift-stats
+  [today]="stats.today"
+  [scheduled]="stats.scheduled"
+  [active]="stats.active"
+  [completed]="stats.completed">
+</app-shift-stats>
+
+<app-shift-filters
+  [hasFilters]="filters.search || filters.status || filters.date || filters.department"
+  (filterChanged)="handleFilterChange($event)">
+</app-shift-filters>
+
+<div *ngIf="!isLoading; else loadingState">
+  <div *ngIf="filteredShifts.length > 0; else emptyState">
+    <app-card class="p-0 overflow-hidden">
+      <app-shift-table
+        [shifts]="filteredShifts"
+        (action)="handleShiftAction($event)">
+      </app-shift-table>
+    </app-card>
+  </div>
+
+  <ng-template #emptyState>
+    <app-empty-state
+      title="No shifts found"
+      description="Try adjusting your filters or create a new shift.">
+      <div actions>
+        <app-button variant="outline" size="sm" (click)="openAddModal()">
+          Create Shift
+        </app-button>
+      </div>
+    </app-empty-state>
+  </ng-template>
+</div>
+
+<ng-template #loadingState>
+  <app-loading></app-loading>
+</ng-template>
+
+<app-modal *ngIf="modalOpen" (close)="closeModal()" [isOpen]="modalOpen">
+  <div modal-header>
+    <h3 class="text-lg font-bold text-primary">
+      {{ modalType === 'add' ? 'Create Shift' : modalType === 'edit' ? 'Edit Shift' : 'Shift Details' }}
+    </h3>
+  </div>
+
+  <div class="p-0">
+    <div *ngIf="modalType === 'view'">
+      <app-shift-details [shift]="selectedShift!"></app-shift-details>
+    </div>
+    <div *ngIf="modalType === 'add' || modalType === 'edit'">
+      <app-shift-form
+        #shiftForm
+        [shift]="selectedShift!"
+        class="p-6">
+      </app-shift-form>
+    </div>
+  </div>
+
+  <div modal-footer *ngIf="modalType !== 'view'">
+    <app-button variant="ghost" size="sm" (click)="closeModal()">Cancel</app-button>
+    <app-button variant="primary" size="sm" (click)="saveShift(shiftForm.shift)">
+      {{ modalType === 'add' ? 'Create Shift' : 'Save Changes' }}
+    </app-button>
+  </div>
+</app-modal>

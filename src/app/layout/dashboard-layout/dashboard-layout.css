@@ -1,0 +1,21 @@
+.flex {
+  display: flex;
+}
+.h-screen {
+  height: 100vh;
+}
+.w-full {
+  width: 100%;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.flex-1 {
+  flex: 1 1 0%;
+}
+.flex-col {
+  flex-direction: column;
+}
+.overflow-y-auto {
+  overflow-y: auto;
+}

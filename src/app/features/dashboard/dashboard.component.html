@@ -1,0 +1,185 @@
+<app-page-header
+  title="Dashboard"
+  description="Good morning, {{ userName }} 👋 Here's what's happening with your workforce today.">
+  <div actions>
+    <app-button variant="primary" size="sm">
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        Create Shift
+      </span>
+    </app-button>
+  </div>
+</app-page-header>
+
+<!-- KPI Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <app-stat-card *ngFor="let stat of stats"
+    [label]="stat.label"
+    [value]="stat.value"
+    [trend]="stat.trend"
+    [trendLabel]="stat.trendLabel">
+  </app-stat-card>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <!-- Main Content Column -->
+  <div class="lg:col-span-2 space-y-8">
+
+    <!-- Today's Shifts -->
+    <app-card class="p-0 overflow-hidden">
+      <div class="p-6 flex justify-between items-center border-b border-text-muted/10">
+        <h3 class="text-lg font-bold text-primary">Today's Shifts</h3>
+        <app-button variant="ghost" size="sm" class="text-secondary hover:text-secondary-dark">
+          View all shifts &rarr;
+        </app-button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm responsive-table">
+          <thead class="text-text-muted uppercase text-[11px] font-bold bg-slate-50/50">
+            <tr>
+              <th class="py-3 px-6">Employee</th>
+              <th class="py-3 px-6">Position</th>
+              <th class="py-3 px-6">Shift</th>
+              <th class="py-3 px-6">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-text-muted/5">
+            <tr *ngFor="let shift of todayShifts" class="hover:bg-slate-50/80 transition-colors group">
+              <td class="py-4 px-6" data-label="Employee">
+                <div class="flex items-center gap-3">
+                  <app-avatar [name]="shift.employee" size="sm"></app-avatar>
+                  <span class="font-medium text-text-main">{{ shift.employee }}</span>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-text-muted" data-label="Position">{{ shift.position }}</td>
+              <td class="py-4 px-6 text-text-muted" data-label="Shift">{{ shift.time }}</td>
+              <td class="py-4 px-6" data-label="Status">
+                <app-status-badge [type]="shift.status"></app-status-badge>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+
+    <!-- Weekly Overview -->
+    <app-card class="p-6">
+      <div class="flex justify-between items-center mb-8">
+        <h3 class="text-lg font-bold text-primary">Weekly Workforce Overview</h3>
+        <div class="flex gap-4 text-xs font-medium">
+          <div class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-sm bg-secondary"></span> Scheduled
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-sm bg-accent"></span> Completed
+          </div>
+        </div>
+      </div>
+
+      <div class="relative h-64 w-full">
+        <svg class="w-full h-full" preserveAspectRatio="none">
+          <!-- Grid lines -->
+          <line *ngFor="let i of [0, 1, 2, 3, 4]"
+                [attr.x1]="0" [attr.y1]="(i * 25) + '%'"
+                [attr.x2]="'100%'" [attr.y2]="(i * 25) + '%'"
+                stroke="currentColor" class="text-text-muted/10" stroke-width="1" />
+
+          <!-- Bars -->
+          <g *ngFor="let data of weeklyOverview; let i = index"
+             [attr.transform]="'translate(' + (i * (100/7) + 2) + '%, 0)'">
+
+            <!-- Completed Bar (Accent) -->
+            <rect [attr.x]="'2px'"
+                  [attr.y]="(100 - (data.completed / maxWeeklyValue * 100)) + '%'"
+                  [attr.width]="'12px'"
+                  [attr.height]="(data.completed / maxWeeklyValue * 100) + '%'"
+                  fill="currentColor" class="text-accent" rx="2" />
+
+            <!-- Scheduled Bar (Secondary) -->
+            <rect [attr.x]="'16px'"
+                  [attr.y]="(100 - (data.scheduled / maxWeeklyValue * 100)) + '%'"
+                  [attr.width]="'12px'"
+                  [attr.height]="(data.scheduled / maxWeeklyValue * 100) + '%'"
+                  fill="currentColor" class="text-secondary" rx="2" />
+          </g>
+        </svg>
+
+        <!-- X Axis Labels -->
+        <div class="absolute bottom-0 left-0 w-full flex justify-between px-1 text-[10px] font-bold text-text-muted uppercase tracking-wider">
+          <span *ngFor="let data of weeklyOverview" class="w-[14.28%] text-center">
+            {{ data.day }}
+          </span>
+        </div>
+      </div>
+    </app-card>
+
+    <!-- Upcoming Schedule -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div *ngFor="let group of upcomingShifts" class="space-y-4">
+        <h4 class="text-sm font-bold text-text-muted uppercase tracking-wider px-1">{{ group.date }}</h4>
+        <div class="space-y-3">
+          <div *ngFor="let shift of group.shifts"
+               class="flex items-center justify-between p-4 rounded-xl border border-text-muted/10 bg-white hover:border-secondary/30 transition-colors shadow-sm">
+            <div class="flex items-center gap-3">
+              <app-avatar [name]="shift.employee" size="sm"></app-avatar>
+              <div>
+                <p class="text-sm font-semibold text-text-main">{{ shift.employee }}</p>
+                <p class="text-xs text-text-muted">{{ shift.time }}</p>
+              </div>
+            </div>
+            <app-status-badge [type]="shift.status"></app-status-badge>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="space-y-8">
+
+    <!-- Quick Actions -->
+    <app-card class="p-6">
+      <h3 class="text-lg font-bold text-primary mb-6">Quick Actions</h3>
+      <div class="grid grid-cols-1 gap-3">
+        <app-button variant="outline" size="sm" class="justify-start gap-3">
+          <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0" /></svg>
+          Add Employee
+        </app-button>
+        <app-button variant="outline" size="sm" class="justify-start gap-3">
+          <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          Create Shift
+        </app-button>
+        <app-button variant="outline" size="sm" class="justify-start gap-3">
+          <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-//9 5h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          View Schedule
+        </app-button>
+        <app-button variant="outline" size="sm" class="justify-start gap-3">
+          <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          Generate Report
+        </app-button>
+      </div>
+    </app-card>
+
+    <!-- Recent Activity -->
+    <app-card class="p-6">
+      <h3 class="text-lg font-bold text-primary mb-6">Recent Activity</h3>
+      <div class="space-y-6 relative">
+        <!-- Timeline line -->
+        <div class="absolute left-2 top-2 bottom-2 w-px bg-text-muted/10"></div>
+
+        <div *ngFor="let activity of activities" class="relative pl-8">
+          <!-- Timeline dot -->
+          <div class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-white border-2 border-secondary z-10"></div>
+
+          <div class="flex flex-col gap-1">
+            <p class="text-sm text-text-main leading-tight">
+              <span class="font-semibold">{{ activity.user }}</span>
+              <span class="text-text-muted">{{ activity.action }}</span>
+            </p>
+            <span class="text-[11px] text-text-muted font-medium">{{ activity.timestamp }}</span>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

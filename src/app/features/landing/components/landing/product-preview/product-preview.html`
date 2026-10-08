@@ -1,0 +1,155 @@
+<section class="bg-background py-20 lg:py-32 overflow-hidden">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <span class="text-sm font-semibold uppercase tracking-wider text-secondary">Product Tour</span>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+        See your workforce at a glance.
+      </h2>
+      <p class="mt-4 text-lg text-text-muted max-w-2xl mx-auto">
+        A clean workspace designed to make employee and shift management easier.
+      </p>
+    </div>
+
+    <!-- High-Fidelity Dashboard Mockup -->
+    <div class="relative mx-auto max-w-6xl rounded-2xl border border-text-muted/20 bg-white shadow-2xl overflow-hidden">
+      <!-- Browser Chrome -->
+      <div class="bg-slate-100 px-4 py-3 border-b border-text-muted/10 flex items-center gap-2">
+        <div class="flex gap-1.5">
+          <div class="h-3 w-3 rounded-full bg-red-400"></div>
+          <div class="h-3 w-3 rounded-full bg-amber-400"></div>
+          <div class="h-3 w-3 rounded-full bg-green-400"></div>
+        </div>
+        <div class="mx-auto bg-white rounded-md px-3 py-1 text-[10px] text-slate-400 w-64 text-center">app.shiftmate.com/dashboard</div>
+      </div>
+
+      <div class="flex h-[600px]">
+        <!-- Sidebar -->
+        <aside class="w-64 border-r border-text-muted/10 bg-slate-50 p-4 hidden md:block">
+          <div class="flex items-center gap-2 mb-8 px-2">
+            <div class="h-6 w-6 rounded bg-primary text-white text-[10px] flex items-center justify-center font-bold">S</div>
+            <span class="font-bold text-primary">ShiftMate</span>
+          </div>
+          <nav class="space-y-1">
+            <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white text-sm font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+              Dashboard
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-slate-200 text-sm transition-colors cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-12 0v1z" /></svg>
+              Employees
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-slate-200 text-sm transition-colors cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2v-11a2 2 0 012-2z" /></svg>
+              Shifts
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-slate-200 text-sm transition-colors cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              Schedule
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-slate-200 text-sm transition-colors cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /></svg>
+              Settings
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 overflow-y-auto bg-white">
+          <!-- Top Bar -->
+          <div class="flex justify-between items-center mb-8">
+            <div>
+              <h3 class="text-xl font-bold text-primary">Welcome back, Sarah!</h3>
+              <p class="text-sm text-text-muted">Here's what's happening with your workforce today.</p>
+            </div>
+            <app-button variant="primary" size="sm">Create New Shift</app-button>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div class="p-4 rounded-xl border border-text-muted/10 bg-slate-50">
+              <p class="text-xs font-medium text-text-muted uppercase">Active Employees</p>
+              <p class="text-2xl font-bold text-primary">124</p>
+            </div>
+            <div class="p-4 rounded-xl border border-text-muted/10 bg-slate-50">
+              <p class="text-xs font-medium text-text-muted uppercase">Shifts Today</p>
+              <p class="text-2xl font-bold text-primary">42</p>
+            </div>
+            <div class="p-4 rounded-xl border border-text-muted/10 bg-slate-50">
+              <p class="text-xs font-medium text-text-muted uppercase">Pending Approvals</p>
+              <p class="text-2xl font-bold text-secondary">12</p>
+            </div>
+          </div>
+
+          <!-- Main Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Shifts Table -->
+            <div class="lg:col-span-2 border border-text-muted/10 rounded-xl overflow-hidden">
+              <div class="px-4 py-3 border-b border-text-muted/10 bg-slate-50 flex justify-between items-center">
+                <h4 class="text-sm font-bold text-primary">Today's Shifts</h4>
+                <a href="#" class="text-xs text-secondary hover:underline">View All</a>
+              </div>
+              <div class="p-0">
+                <table class="w-full text-left text-sm">
+                  <thead class="bg-slate-50 text-text-muted uppercase text-[10px] font-bold">
+                    <tr>
+                      <th class="px-4 py-2">Employee</th>
+                      <th class="px-4 py-2">Shift</th>
+                      <th class="px-4 py-2">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-t border-text-muted/5">
+                      <td class="px-4 py-3 flex items-center gap-2">
+                        <div class="h-6 w-6 rounded-full bg-slate-300"></div>
+                        <span>John Doe</span>
+                      </td>
+                      <td class="px-4 py-3">09:00 AM - 05:00 PM</td>
+                      <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-[10px] font-bold">ACTIVE</span></td>
+                    </tr>
+                    <tr class="border-t border-text-muted/5">
+                      <td class="px-4 py-3 flex items-center gap-2">
+                        <div class="h-6 w-6 rounded-full bg-slate-300"></div>
+                        <span>Jane Smith</span>
+                      </td>
+                      <td class="px-4 py-3">10:00 AM - 06:00 PM</td>
+                      <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-[10px] font-bold">ACTIVE</span></td>
+                    </tr>
+                    <tr class="border-t border-text-muted/5">
+                      <td class="px-4 py-3 flex items-center gap-2">
+                        <div class="h-6 w-6 rounded-full bg-slate-300"></div>
+                        <span>Mike Ross</span>
+                      </td>
+                      <td class="px-4 py-3">02:00 PM - 10:00 PM</td>
+                      <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-600 text-[10px] font-bold">PENDING</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="border border-text-muted/10 rounded-xl overflow-hidden">
+              <div class="px-4 py-3 border-b border-text-muted/10 bg-slate-50">
+                <h4 class="text-sm font-bold text-primary">Recent Activity</h4>
+              </div>
+              <div class="p-4 space-y-4">
+                <div class="flex gap-3">
+                  <div class="h-2 w-2 rounded-full bg-secondary mt-1.5"></div>
+                  <p class="text-xs text-text-muted"><span class="font-bold text-text-main">Jane Smith</span> requested a shift swap.</p>
+                </div>
+                <div class="flex gap-3">
+                  <div class="h-2 w-2 rounded-full bg-primary mt-1.5"></div>
+                  <p class="text-xs text-text-muted"><span class="font-bold text-text-main">Admin</span> updated the Monday schedule.</p>
+                </div>
+                <div class="flex gap-3">
+                  <div class="h-2 w-2 rounded-full bg-accent mt-1.5"></div>
+                  <p class="text-xs text-text-muted"><span class="font-bold text-text-main">New Hire</span> was added to the team.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>

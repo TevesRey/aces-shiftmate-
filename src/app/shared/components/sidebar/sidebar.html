@@ -1,0 +1,45 @@
+<div
+  [class]="'fixed inset-y-0 left-0 z-50 transition-all duration-300 bg-primary text-primary-foreground flex flex-col h-full shadow-xl ' + (collapsed ? 'w-20' : 'w-64') + (mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0')"
+>
+  <!-- Brand Header -->
+  <div class="flex items-center gap-3 px-6 py-6 border-b border-primary-foreground/10 overflow-hidden">
+    <div class="h-8 w-8 min-w-[32px] rounded-lg bg-white text-primary flex items-center justify-center font-bold text-xl">S</div>
+    <span *ngIf="!collapsed" class="text-xl font-bold tracking-tight truncate transition-opacity duration-300">ShiftMate</span>
+  </div>
+
+  <!-- Navigation -->
+  <div class="flex-1 overflow-y-auto py-6 px-3 space-y-8">
+    <div *ngFor="let group of navItems" class="space-y-2">
+      <p *ngIf="!collapsed" class="px-3 text-xs font-semibold uppercase tracking-wider text-primary-foreground/40 mb-3">
+        {{ group.section }}
+      </p>
+      <div class="space-y-1">
+        <a
+          *ngFor="let item of group.items"
+          [routerLink]="item.route"
+          routerLinkActive="bg-secondary text-white shadow-md"
+          class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-primary-foreground/10 group cursor-pointer"
+        >
+          <svg class="h-5 w-5 min-w-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="item.icon"></path>
+          </svg>
+          <span *ngIf="!collapsed" class="text-sm font-medium truncate transition-opacity duration-300">
+            {{ item.label }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="p-3 border-t border-primary-foreground/10 space-y-1">
+    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-primary-foreground/10 group cursor-pointer">
+      <svg class="h-5 w-5 min-w-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.588 a1.5 1.5 0 01.412-.841l1.26-.74a.5.5 0 00.2 la-1.26-.74z" /></svg>
+      <span *ngIf="!collapsed" class="text-sm font-medium truncate">Help</span>
+    </a>
+    <a href="/auth/login" class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-primary-foreground/10 group cursor-pointer">
+      <svg class="h-5 w-5 min-w-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" /></svg>
+      <span *ngIf="!collapsed" class="text-sm font-medium truncate">Logout</span>
+    </a>
+  </div>
+</div >

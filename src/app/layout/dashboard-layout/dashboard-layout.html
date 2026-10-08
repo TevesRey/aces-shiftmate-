@@ -1,0 +1,15 @@
+<div class="flex h-screen w-full overflow-hidden bg-background">
+  <!-- Sidebar: Fixed on desktop, Drawer on mobile -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content Area -->
+  <div class="flex flex-1 flex-col overflow-hidden">
+    <!-- Topbar: Fixed at top -->
+    <app-topbar></app-topbar>
+
+    <!-- Page Content: Scrollable -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div >

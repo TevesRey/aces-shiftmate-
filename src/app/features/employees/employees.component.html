@@ -1,0 +1,79 @@
+<app-page-header
+  title="Employees"
+  description="Manage your workforce and employee information.">
+  <div actions>
+    <app-button variant="primary" size="sm" (click)="openAddModal()">
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        Add Employee
+      </span>
+    </app-button>
+  </div>
+</app-page-header>
+
+<app-employee-stats
+  [total]="stats.total"
+  [active]="stats.active"
+  [onLeave]="stats.onLeave"
+  [inactive]="stats.inactive">
+</app-employee-stats>
+
+<app-employee-filters
+  [hasFilters]="filters.search || filters.status || filters.department || filters.position"
+  (filterChanged)="handleFilterChange($event)">
+</app-employee-filters>
+
+<div *ngIf="!isLoading; else loadingState">
+  <div *ngIf="filteredEmployees.length > 0; else emptyState">
+    <app-card class="p-0 overflow-hidden">
+      <app-employee-table
+        [employees]="filteredEmployees"
+        (action)="handleEmployeeAction($event)">
+      </app-employee-table>
+    </app-card>
+  </div>
+
+  <ng-template #emptyState>
+    <app-empty-state
+      title="No employees found"
+      description="Try adjusting your search or filters.">
+      <div actions>
+        <app-button variant="outline" size="sm" (click)="handleFilterReset()">
+          Clear Filters
+        </app-button>
+      </div>
+    </app-empty-state>
+  </ng-template>
+</div>
+
+<ng-template #loadingState>
+  <app-loading></app-loading>
+</ng-template>
+
+<app-modal *ngIf="modalOpen" (close)="closeModal()" [isOpen]="modalOpen">
+  <div modal-header>
+    <h3 class="text-lg font-bold text-primary">
+      {{ modalType === 'add' ? 'Add Employee' : modalType === 'edit' ? 'Edit Employee' : 'Employee Details' }}
+    </h3>
+  </div>
+
+  <div class="p-0">
+    <div *ngIf="modalType === 'view'">
+      <app-employee-details [employee]="selectedEmployee!"></app-employee-details>
+    </div>
+    <div *ngIf="modalType === 'add' || modalType === 'edit'">
+      <app-employee-form
+        #employeeForm
+        [employee]="selectedEmployee!"
+        class="p-6">
+      </app-employee-form>
+    </div>
+  </div>
+
+  <div modal-footer *ngIf="modalType !== 'view'">
+    <app-button variant="ghost" size="sm" (click)="closeModal()">Cancel</app-button>
+    <app-button variant="primary" size="sm" (click)="saveEmployee(employeeForm.employee)">
+      {{ modalType === 'add' ? 'Add Employee' : 'Save Changes' }}
+    </app-button>
+  </div>
+</app-modal>

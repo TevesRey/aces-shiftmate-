@@ -1,3 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #0f172a;       /* Deep Navy */
+  --color-primary-foreground: #f8fafc;
+
+  --color-secondary: #3b82f6;     /* Modern Blue */
+  --color-secondary-foreground: #ffffff;
+
+  --color-accent: #22c55e;        /* Soft Green / Success */
+  --color-accent-foreground: #ffffff;
+
+  --color-background: #f8fafc;   /* Light Gray/White */
+  --color-surface: #ffffff;
+
+  --color-text-main: #1e293b;     /* Dark Charcoal */
+  --color-text-muted: #64748b;
+
+  /* Typography */
+  --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text-main font-sans antialiased;
+  }
+}
