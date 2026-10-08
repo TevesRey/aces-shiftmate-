@@ -1,0 +1,205 @@
+<app-page-header
+  title="Schedule"
+  description="Manage and visualize employee shifts across the week.">
+  <div actions>
+    <app-button variant="primary" size="sm" (click)="openAddModal()">
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        Add Shift
+      </span>
+    </app-button>
+  </div>
+</app-page-header>
+
+<!-- Date Navigation Toolbar -->
+<div class="flex flex-col md:flex-row gap-6 items-center justify-between mb-8 p-4 rounded-2xl bg-surface border border-text-muted/10 shadow-sm">
+  <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2">
+      <app-button variant="ghost" size="sm" (click)="prevWeek()">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+      </app-button>
+      <app-button variant="outline" size="sm" (click)="goToToday()">Today</app-button>
+      <app-button variant="ghost" size="sm" (click)="nextWeek()">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      </app-button>
+    </div>
+    <span class="text-sm font-bold text-primary">{{ dateRangeLabel }}</span>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <div class="flex bg-slate-100 p-1 rounded-lg">
+      <button
+        (click)="viewMode = 'week'"
+        [class]="viewMode === 'week' ? 'px-3 py-1 text-xs font-bold bg-white shadow-sm rounded-md text-primary' : 'px-3 py-1 text-xs font-medium text-text-muted'">
+        Week
+      </button>
+      <button
+        (click)="viewMode = 'month'"
+        [class]="viewMode === 'month' ? 'px-3 py-1 text-xs font-bold bg-white shadow-sm rounded-md text-primary' : 'px-3 py-1 text-xs font-medium text-text-muted'">
+        Month
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Search and Filters -->
+<div class="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between">
+  <div class="w-full md:w-96">
+    <app-search-input
+      placeholder="Search employee..."
+      (search)="handleSearch($event)">
+    </app-search-input>
+  </div>
+
+  <div class="flex flex-wrap gap-3 items-center">
+    <select
+      (change)="handleFilterChange('status', $any($event.target).value)"
+      class="px-3 py-2 border border-text-muted/30 rounded-lg bg-surface text-sm outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all">
+      <option value="">Status: All</option>
+      <option value="Scheduled">Scheduled</option>
+      <option value="Active">Active</option>
+      <option value="Completed">Completed</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+
+    <select
+      (change)="handleFilterChange('department', $any($event.target).value)"
+      class="px-3 py-2 border border-text-muted/30 rounded-lg bg-surface text-sm outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all">
+      <option value="">Department: All</option>
+      <option value="Engineering">Engineering</option>
+      <option value="Human Resources">Human Resources</option>
+      <option value="Finance">Finance</option>
+      <option value="Operations">Operations</option>
+    </select>
+
+    <app-button
+      *ngIf="filters.search || filters.status || filters.department"
+      variant="ghost"
+      size="sm"
+      (click)="handleFilterReset()">
+      Reset Filters
+    </app-button>
+  </div>
+</div>
+
+<!-- View Container -->
+<div *ngIf="!isLoading; else loadingState">
+  <div *ngIf="viewMode === 'week'">
+    <!-- Desktop Weekly Schedule -->
+    <div class="hidden md:block overflow-x-auto rounded-2xl border border-text-muted/10 bg-surface shadow-sm">
+      <div class="grid grid-cols-8 border-b border-text-muted/10">
+        <div class="p-4 bg-slate-50/50 border-r border-text-muted/10 font-bold text-xs uppercase tracking-wider text-text-muted">Employee</div>
+        <div *ngFor="let day of weekDays" class="p-4 text-center bg-slate-50/50 border-r border-text-muted/10 last:border-r-0">
+          <div class="text-xs font-bold text-text-muted uppercase">{{ day | date:'EEE' }}</div>
+          <div class="text-sm font-bold text-primary">{{ day | date:'d' }}</div>
+        </div>
+      </div>
+
+      <div class="divide-y divide-text-muted/10">
+        <div *ngFor="let emp of (filteredShifts | slice:0:10)" class="grid grid-cols-8">
+          <div class="p-4 border-r border-text-muted/10 bg-slate-50/30 flex items-center gap-3">
+            <app-avatar [name]="emp.employeeName" size="sm"></app-avatar>
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-text-main">{{ emp.employeeName }}</span>
+              <span class="text-[10px] text-text-muted">{{ emp.position }}</span>
+            </div>
+          </div>
+          <div *ngFor="let day of weekDays" class="p-2 border-r border-text-muted/10 last:border-r-0 min-h-[80px] relative">
+            <div *ngIf="shiftFor(emp, day)"
+                 (click)="openViewModal(shiftFor(emp, day)!)"
+                 class="p-2 rounded-lg border text-[10px] cursor-pointer hover:shadow-md transition-all"
+                 [ngClass]="{
+                   'bg-secondary/10 border-secondary/30 text-secondary': shiftFor(emp, day)?.status === 'Scheduled',
+                   'bg-accent/10 border-accent/30 text-accent': shiftFor(emp, day)?.status === 'Active',
+                   'bg-blue-100 border-blue-300 text-blue-600': shiftFor(emp, day)?.status === 'Completed',
+                   'bg-red-100 border-red-300 text-red-600': shiftFor(emp, day)?.status === 'Cancelled'
+                 }">
+              <div class="font-bold truncate">{{ shiftFor(emp, day)?.startTime }} - {{ shiftFor(emp, day)?.endTime }}</div>
+              <app-status-badge [type]="mapStatus(shiftFor(emp, day)?.status)" size="xs"></app-status-badge>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Schedule List -->
+    <div class="md:hidden space-y-8">
+      <div *ngFor="let day of weekDays" class="space-y-4">
+        <h3 class="text-sm font-bold text-primary uppercase tracking-wider border-b border-text-muted/20 pb-2">
+          {{ day | date:'EEEE, MMM d' }}
+        </h3>
+        <div class="space-y-3">
+          <div *ngFor="let shift of shiftsForDay(day)"
+               class="p-4 rounded-xl border border-text-muted/10 bg-white shadow-sm flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <app-avatar [name]="shift.employeeName" size="sm"></app-avatar>
+              <div class="flex flex-col">
+                <span class="text-sm font-semibold text-text-main">{{ shift.employeeName }}</span>
+                <span class="text-xs text-text-muted">{{ shift.position }}</span>
+                <span class="text-xs font-medium text-primary">{{ shift.startTime }} – {{ shift.endTime }}</span>
+              </div>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+              <app-status-badge [type]="mapStatus(shift.status)"></app-status-badge>
+              <div class="flex gap-1">
+                <app-button variant="ghost" size="sm" (click)="openViewModal(shift)">View</app-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <app-empty-state *ngIf="shiftsForDay(day).length === 0"
+          title="No shifts"
+          description="No shifts scheduled for this day."
+          class="p-4 bg-slate-50 rounded-xl border border-dashed border-text-muted/30">
+        </app-empty-state>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="viewMode === 'month'" class="flex flex-col items-center justify-center p-20 bg-surface rounded-2xl border border-text-muted/10 shadow-sm">
+    <svg class="w-16 h-16 text-text-muted/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2,2 0 002 2z" /></svg>
+    <h3 class="text-lg font-bold text-primary">Month View Placeholder</h3>
+    <p class="text-text-muted">Monthly scheduling view is coming soon.</p>
+  </div>
+
+  <div *ngIf="filteredShifts.length === 0 && viewMode === 'week'" class="mt-12">
+    <app-empty-state
+      title="No shifts found"
+      description="There are no scheduled shifts matching your current filters."
+      ctaLabel="Reset Filters"
+      (click)="handleFilterReset()">
+    </app-empty-state>
+  </div>
+</div>
+
+<ng-template #loadingState>
+  <app-loading></app-loading>
+</ng-template>
+
+<app-modal *ngIf="modalOpen" (close)="closeModal()" [isOpen]="modalOpen">
+  <div modal-header>
+    <h3 class="text-lg font-bold text-primary">
+      {{ modalType === 'add' ? 'Create Shift' : modalType === 'edit' ? 'Edit Shift' : 'Shift Details' }}
+    </h3>
+  </div>
+
+  <div class="p-0">
+    <div *ngIf="modalType === 'view'">
+      <app-shift-details [shift]="selectedShift!"></app-shift-details>
+    </div>
+    <div *ngIf="modalType === 'add' || modalType === 'edit'">
+      <app-shift-form
+        #shiftForm
+        [shift]="selectedShift!"
+        class="p-6">
+      </app-shift-form>
+    </div>
+  </div>
+
+  <div modal-footer *ngIf="modalType !== 'view'">
+    <app-button variant="ghost" size="sm" (click)="closeModal()">Cancel</app-button>
+    <app-button variant="primary" size="sm" (click)="saveShift(shiftForm.shift)">
+      {{ modalType === 'add' ? 'Create Shift' : 'Save Changes' }}
+    </app-button>
+  </div>
+</app-modal>

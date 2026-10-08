@@ -1,4 +1,3 @@
-import { EmployeesComponent } from './features/employees/employees.component';
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout';
 import { LoginComponent } from './features/auth/login/login';
@@ -6,6 +5,9 @@ import { RegisterComponent } from './features/auth/register/register';
 import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password';
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { EmployeesComponent } from './features/employees/employees.component';
+import { ShiftsComponent } from './features/shifts/shifts.component';
+import { ScheduleComponent } from './features/schedule/schedule.component';
 import { PlaceholderComponent } from './shared/components/placeholder/placeholder.component';
 
 export const routes: Routes = [
@@ -25,8 +27,8 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'employees', component: EmployeesComponent },
-      { path: 'shifts', component: PlaceholderComponent },
-      { path: 'schedule', component: PlaceholderComponent },
+      { path: 'shifts', component: ShiftsComponent },
+      { path: 'schedule', component: ScheduleComponent },
       { path: 'users', component: PlaceholderComponent },
       { path: 'reports', component: PlaceholderComponent },
       { path: 'profile', component: PlaceholderComponent },

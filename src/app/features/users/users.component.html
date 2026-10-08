@@ -1,0 +1,91 @@
+<app-page-header
+  title="Users"
+  description="Manage employee accounts, roles, and access.">
+  <div actions>
+    <app-button variant="primary" size="sm" (click)="openAddModal()">
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        Add User
+      </span>
+    </app-button>
+  </div>
+</app-page-header>
+
+<app-user-stats
+  [total]="stats.total"
+  [active]="stats.active"
+  [managers]="stats.managers"
+  [pending]="stats.pending">
+</app-user-stats>
+
+<app-user-filters
+  [hasFilters]="filters.search || filters.role || filters.status || filters.department"
+  (filterChanged)="handleFilterChange($event)">
+</app-user-filters>
+
+<div *ngIf="!isLoading; else loadingState">
+  <div *ngIf="filteredUsers.length > 0; else emptyState">
+    <app-card class="p-0 overflow-hidden">
+      <app-user-table
+        [users]="filteredUsers"
+        (action)="handleUserAction($event)">
+      </app-user-table>
+    </app-card>
+  </div>
+
+  <ng-template #emptyState>
+    <app-empty-state
+      title="No users found"
+      description="Try adjusting your search or filters.">
+      <div actions>
+        <app-button variant="outline" size="sm" (click)="handleFilterReset()">
+          Clear Filters
+        </app-button>
+      </div>
+    </app-empty-state>
+  </ng-template>
+</div>
+
+<ng-template #loadingState>
+  <app-loading></app-loading>
+</ng-template>
+
+<app-modal *ngIf="modalOpen" (close)="closeModal()" [isOpen]="modalOpen">
+  <div modal-header>
+    <h3 class="text-lg font-bold text-primary">
+      {{ modalType === 'add' ? 'Add User' : modalType === 'edit' ? 'Edit User' : modalType === 'role' ? 'Change Role' : 'User Details' }}
+    </h3>
+  </div>
+
+  <div class="p-0">
+    <div *ngIf="modalType === 'view'">
+      <app-user-details [user]="selectedUser!"></app-user-details>
+    </div>
+    <div *ngIf="modalType === 'add' || modalType === 'edit'">
+      <app-user-form
+        #userForm
+        [user]="selectedUser!"
+        class="p-6">
+      </app-user-form>
+    </div>
+    <div *ngIf="modalType === 'role'" class="p-6 space-y-4">
+      <p class="text-sm text-text-muted mb-4">Select a new role for {{ selectedUser?.email }}:</p>
+      <div class="grid grid-cols-1 gap-3">
+        <app-button
+          *ngFor="let role of ['ADMIN', 'MANAGER', 'EMPLOYEE']"
+          variant="outline"
+          class="justify-start"
+          (click)="updateRole(role)">
+          {{ role }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+
+  <div modal-footer *ngIf="modalType !== 'view' && modalType !== 'role'">
+    <app-button variant="ghost" size="sm" (click)="closeModal()">Cancel</app-button>
+    <app-button variant="primary" size="sm" (click)="saveUser(userForm.user)">
+      {{ modalType === 'add' ? 'Create User' : 'Save Changes' }}
+    </app-button>
+  </div>
+</app-modal>

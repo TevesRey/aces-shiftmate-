@@ -1,0 +1,13 @@
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 200px repeat(7, 1fr);
+}
+
+.shift-block {
+  transition: all 0.2s ease;
+}
+
+.shift-block:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
