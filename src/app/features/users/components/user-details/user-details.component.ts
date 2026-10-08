@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { User } from '../models/user.model';
-import { Employee } from '../employees/models/employee.model';
-import { MOCK_EMPLOYEES } from '../employees/models/mock-employees';
+import { User } from '../models/user.model.ts';
+import { Employee } from '../employees/models/employee.model.ts';
+import { MOCK_EMPLOYEES } from '../employees/models/mock-employees.ts';
 
 @Component({
   selector: 'app-user-details',

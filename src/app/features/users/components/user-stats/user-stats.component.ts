@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatCardComponent } from '../../../shared/components/stat-card/stat-card.component';
+import { StatCardComponent } from '../../../shared/components/stat-card/stat-card.component.ts';
 
 @Component({
   selector: 'app-user-stats',

@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Button } from '../../../shared/components/button/button';
-import { Shift } from '../models/shift.model';
+import { Button } from '../../../shared/components/button/button.ts';
+import { Shift } from '../models/shift.model.ts';
 
 @Component({
   selector: 'app-shift-form',

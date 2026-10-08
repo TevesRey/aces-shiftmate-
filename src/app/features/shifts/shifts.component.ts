@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
-import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component';
-import { Button } from '../../shared/components/button/button';
+import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component.ts';
+import { Button } from '../../shared/components/button/button.ts';
 import { Modal } from '../../shared/components/modal/modal';
 import { ShiftStatsComponent } from './components/shift-stats/shift-stats.component';
 import { ShiftFiltersComponent } from './components/shift-filters/shift-filters.component';
 import { ShiftTableComponent } from './components/shift-table/shift-table';
 import { ShiftFormComponent } from './components/shift-form/shift-form.component';
 import { ShiftDetailsComponent } from './components/shift-details/shift-details.component';
-import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state';
-import { LoadingComponent } from '../../shared/components/loading/loading';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { Shift, ShiftStatus } from './models/shift.model';
 import { MOCK_SHIFTS } from './models/mock-shifts';
 

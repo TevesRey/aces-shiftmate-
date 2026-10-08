@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
-import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component';
-import { Button } from '../../shared/components/button/button';
+import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component.ts';
+import { Button } from '../../shared/components/button/button.ts';
 import { Modal } from '../../shared/components/modal/modal';
 import { EmployeeStatsComponent } from './components/employee-stats/employee-stats.component';
 import { EmployeeFiltersComponent } from './components/employee-filters/employee-filters.component';
 import { EmployeeTableComponent } from './components/employee-table/employee-table';
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import { EmployeeDetailsComponent } from './components/employee-details/employee-details.component';
-import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state';
-import { LoadingComponent } from '../../shared/components/loading/loading';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { Employee, EmployeeStatus } from './models/employee.model';
 import { MOCK_EMPLOYEES } from './models/mock-employees';
 

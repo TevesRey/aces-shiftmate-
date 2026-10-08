@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchInputComponent } from '../../../shared/components/search-input/search-input.component';
-import { Button } from '../../../shared/components/button/button';
+import { SearchInputComponent } from '../../../shared/components/search-input/search-input.component.ts';
+import { Button } from '../../../shared/components/button/button.ts';
 
 @Component({
   selector: 'app-shift-filters',

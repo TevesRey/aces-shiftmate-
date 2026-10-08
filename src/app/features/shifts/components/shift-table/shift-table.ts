@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
-import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component';
-import { Button } from '../../../shared/components/button/button';
-import { Shift } from '../models/shift.model';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component.ts';
+import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component.ts';
+import { Button } from '../../../shared/components/button/button.ts';
+import { Shift } from '../models/shift.model.ts';
 
 @Component({
   selector: 'app-shift-table',

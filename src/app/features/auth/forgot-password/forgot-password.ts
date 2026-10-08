@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Button } from '../../../shared/components/button/button';
+import { Button } from '../../../shared/components/button/button.ts';
 
 @Component({
   selector: 'app-forgot-password',

@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
-import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component';
-import { Button } from '../../../shared/components/button/button';
-import { User } from '../models/user.model';
-import { Employee } from '../employees/models/employee.model';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component.ts';
+import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component.ts';
+import { Button } from '../../../shared/components/button/button.ts';
+import { User } from '../models/user.model.ts';
+import { Employee } from '../employees/models/employee.model.ts';
 
 @Component({
   selector: 'app-user-table',

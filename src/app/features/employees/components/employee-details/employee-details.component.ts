@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
-import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component';
-import { Employee } from '../models/employee.model';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component.ts';
+import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component.ts';
+import { Employee } from '../models/employee.model.ts';
 
 @Component({
   selector: 'app-employee-details',

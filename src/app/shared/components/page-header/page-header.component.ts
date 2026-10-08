@@ -16,7 +16,7 @@ import { Button } from '../button/button';
     </div>
   `,
   standalone: true,
-  imports: [CommonModule, Button],
+  imports: [CommonModule],
 })
 export class PageHeaderComponent {
   @Input() title: string = 'Page Title';

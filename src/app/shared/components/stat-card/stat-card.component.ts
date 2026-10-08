@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Card } from './card/card';
+import { Card } from '../card/card';
 
 @Component({
   selector: 'app-stat-card',

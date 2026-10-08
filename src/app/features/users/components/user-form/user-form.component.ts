@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { User, UserRole, UserStatus } from '../models/user.model';
-import { Employee } from '../employees/models/employee.model';
-import { MOCK_EMPLOYEES } from '../employees/models/mock-employees';
+import { User, UserRole, UserStatus } from '../models/user.model.ts';
+import { Employee } from '../employees/models/employee.model.ts';
+import { MOCK_EMPLOYEES } from '../employees/models/mock-employees.ts';
 
 @Component({
   selector: 'app-user-form',

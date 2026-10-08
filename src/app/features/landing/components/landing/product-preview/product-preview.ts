@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Card } from '../../../../shared/components/card/card';
-import { Button } from '../../../../shared/components/button/button';
+import { Card } from '../../../../shared/components/card/card.ts';
+import { Button } from '../../../../shared/components/button/button.ts';
 
 @Component({
   selector: 'app-product-preview',

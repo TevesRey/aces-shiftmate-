@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
-import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component';
-import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
-import { Card } from '../../shared/components/card/card';
-import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
-import { Button } from '../../shared/components/button/button';
+import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component.ts';
+import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component.ts';
+import { Card } from '../../shared/components/card/card.ts';
+import { AvatarComponent } from '../../shared/components/avatar/avatar.component.ts';
+import { Button } from '../../shared/components/button/button.ts';
 
 interface Stat {
   label: string;
